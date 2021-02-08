@@ -32,20 +32,41 @@
             </div>
           </div>
         </div>
+        <RecommendedProductsSection :experiment="experiment" :recommendedProducts="relatedProducts" :feature="feature">
+          <template #heading
+            >Compare similar items
+            <!-- <DemoGuideBadge
+              v-if="demoGuideBadgeArticle"
+              :article="demoGuideBadgeArticle"
+              hideTextOnSmallScreens
+            ></DemoGuideBadge> -->
+          </template>
+        </RecommendedProductsSection>
       </div>
     </template>
   </Layout>
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
+import swal from 'sweetalert';
+
+import { mapState, mapGetters, mapActions} from 'vuex';
+import { RepositoryFactory } from '@/repositories/RepositoryFactory';
 
 import { AnalyticsHandler } from '@/analytics/AnalyticsHandler';
 
 import CartItem from './components/CartItem.vue';
 import Layout from '@/components/Layout/Layout';
-
 import AbandonCartButton from '@/partials/AbandonCartButton/AbandonCartButton';
+import RecommendedProductsSection from '@/components/RecommendedProductsSection/RecommendedProductsSection';
+import { discountProductPrice } from '@/util/discountProductPrice';
+
+import { getDemoGuideArticleFromPersonalizeARN } from '@/partials/AppModal/DemoGuide/config';
+
+const RecommendationsRepository = RepositoryFactory.get('recommendations');
+const MAX_RECOMMENDATIONS = 6;
+const EXPERIMENT_FEATURE = 'product_detail_related';
+
 
 export default {
   name: 'Cart',
@@ -53,6 +74,15 @@ export default {
     Layout,
     CartItem,
     AbandonCartButton,
+    RecommendedProductsSection,
+  },
+  data() {
+    return {
+      quantity: 1,
+      feature: EXPERIMENT_FEATURE,
+      relatedProducts: null,
+      experiment: null,
+    };
   },
   created() {
     AnalyticsHandler.cartViewed(this.user, this.cart, this.cartQuantity, this.cartTotal);
@@ -81,6 +111,91 @@ export default {
       if (this.cartQuantity === null) return null;
 
       return `Summary (${this.cartQuantity}) ${this.cartQuantity === 1 ? 'item' : 'items'}`;
+    },
+  },
+  watch: {
+    $route: {
+      immediate: true,
+      handler() {
+        this.fetchData();
+      },
+    },
+    personalizeUserID() {
+      this.getRelatedProducts();
+    },
+  },
+  methods: {
+    ...mapActions(['addToCart']),
+    resetQuantity() {
+      this.quantity = 1;
+    },
+    async addProductToCart() {
+      await this.addToCart({
+        product: {
+          ...this.product,
+          price: this.discount ? discountProductPrice(this.product.price) : this.product.price,
+        },
+        quantity: this.quantity,
+        feature: this.$route.query.feature,
+        exp: this.$route.query.exp,
+      });
+
+      this.renderAddedToCartConfirmation();
+
+      this.resetQuantity();
+    },
+    async fetchData() {
+      // await this.getProductByID(this.$route.params.id);
+
+      this.getRelatedProducts();
+
+      // this.recordProductViewed(this.$route.query.feature, this.$route.query.exp, this.$route.query.di);
+    },
+    async getRelatedProducts() {
+      // reset in order to trigger recalculation in carousel - carousel UI breaks without this
+      this.relatedProducts = null;
+
+      this.experiment = null;
+      this.demoGuideBadgeArticle = null;
+
+      const response = await RecommendationsRepository.getRelatedProducts(
+        this.personalizeUserID ?? '',
+        this.cart.items[0].product_id,
+        // this.cart.items[0].product_id,
+        MAX_RECOMMENDATIONS,
+        EXPERIMENT_FEATURE,
+      );
+
+      if (response.headers) {
+        const experimentName = response.headers['x-experiment-name'];
+        const personalizeRecipe = response.headers['x-personalize-recipe'];
+
+        if (experimentName) this.experiment = `Active experiment: ${experimentName}`;
+        if (personalizeRecipe) this.demoGuideBadgeArticle = getDemoGuideArticleFromPersonalizeARN(personalizeRecipe);
+      }
+
+      this.relatedProducts = response.data;
+
+      if (this.relatedProducts.length > 0 && 'experiment' in this.relatedProducts[0]) {
+        AnalyticsHandler.identifyExperiment(this.user, this.relatedProducts[0].experiment);
+      }
+    },
+    renderAddedToCartConfirmation() {
+      swal({
+        title: 'Added to Cart',
+        icon: 'success',
+        buttons: {
+          cancel: 'Continue Shopping',
+          cart: 'View Cart',
+        },
+      }).then((value) => {
+        switch (value) {
+          case 'cancel':
+            break;
+          case 'cart':
+            this.$router.push('/cart');
+        }
+      });
     },
   },
 };
