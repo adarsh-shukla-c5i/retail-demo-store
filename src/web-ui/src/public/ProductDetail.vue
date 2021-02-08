@@ -56,11 +56,11 @@
         <RecommendedProductsSection :experiment="experiment" :recommendedProducts="relatedProducts" :feature="feature">
           <template #heading
             >Compare similar items
-            <DemoGuideBadge
+            <!-- <DemoGuideBadge
               v-if="demoGuideBadgeArticle"
               :article="demoGuideBadgeArticle"
               hideTextOnSmallScreens
-            ></DemoGuideBadge>
+            ></DemoGuideBadge> -->
           </template>
         </RecommendedProductsSection>
       </div>
@@ -82,7 +82,7 @@ import ProductPrice from '@/components/ProductPrice/ProductPrice';
 import FiveStars from '@/components/FiveStars/FiveStars';
 import RecommendedProductsSection from '@/components/RecommendedProductsSection/RecommendedProductsSection';
 import { discountProductPrice } from '@/util/discountProductPrice';
-import DemoGuideBadge from '@/components/DemoGuideBadge/DemoGuideBadge';
+// import DemoGuideBadge from '@/components/DemoGuideBadge/DemoGuideBadge';
 
 import { getDemoGuideArticleFromPersonalizeARN } from '@/partials/AppModal/DemoGuide/config';
 
@@ -97,7 +97,7 @@ export default {
     ProductPrice,
     FiveStars,
     RecommendedProductsSection,
-    DemoGuideBadge,
+    // DemoGuideBadge,
   },
   mixins: [product],
   props: {

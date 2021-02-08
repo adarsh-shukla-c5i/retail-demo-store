@@ -15,7 +15,7 @@
     </form>
 
     <div class="text-center">
-      <DemoGuideBadge :article="demoGuideBadgeArticle" class="demo-guide-badge px-0 d-flex"></DemoGuideBadge>
+      <!-- <DemoGuideBadge :article="demoGuideBadgeArticle" class="demo-guide-badge px-0 d-flex"></DemoGuideBadge> -->
     </div>
   </div>
 </template>
@@ -23,13 +23,14 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 
-import DemoGuideBadge from '@/components/DemoGuideBadge/DemoGuideBadge';
+// import DemoGuideBadge from '@/components/DemoGuideBadge/DemoGuideBadge';
 
 import { Articles } from '@/partials/AppModal/DemoGuide/config';
 
 export default {
   name: 'AbandonCartButton',
-  components: { DemoGuideBadge },
+  // components: { DemoGuideBadge },
+  components: {},
   data() {
     return {
       pinpointEnabled: process.env.VUE_APP_PINPOINT_APP_ID,

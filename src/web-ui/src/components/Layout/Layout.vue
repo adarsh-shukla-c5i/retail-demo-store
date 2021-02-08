@@ -13,7 +13,7 @@
 
     <slot v-if="!isLoading"></slot>
 
-    <TextAlerts v-if="showTextAlerts" class="mt-5"></TextAlerts>
+    <!-- <TextAlerts v-if="showTextAlerts" class="mt-5"></TextAlerts> -->
 
     <Footer v-if="showFooter" class="my-4 container"></Footer>
 
@@ -21,7 +21,7 @@
 
     <ConfirmationModal></ConfirmationModal>
 
-    <DemoGuideButton v-if="showDemoGuide" class="demo-guide-button"></DemoGuideButton>
+    <!-- <DemoGuideButton v-if="showDemoGuide" class="demo-guide-button"></DemoGuideButton> -->
   </div>
 </template>
 
@@ -29,10 +29,10 @@
 import LoadingFallback from '../LoadingFallback/LoadingFallback';
 import PreviousPageLink from './PreviousPageLink';
 import Footer from '@/partials/Footer/Footer';
-import TextAlerts from '@/partials/TextAlerts/TextAlerts';
+// import TextAlerts from '@/partials/TextAlerts/TextAlerts';
 import Navigation from '@/partials/Navigation/Navigation';
 import AppModal from '@/partials/AppModal/AppModal';
-import DemoGuideButton from '@/partials/DemoGuideButton/DemoGuideButton';
+// import DemoGuideButton from '@/partials/DemoGuideButton/DemoGuideButton';
 import ConfirmationModal from '@/partials/ConfirmationModal/ConfirmationModal';
 
 export default {
@@ -41,10 +41,10 @@ export default {
     Navigation,
     LoadingFallback,
     PreviousPageLink,
-    TextAlerts,
+    // TextAlerts,
     Footer,
     AppModal,
-    DemoGuideButton,
+    // DemoGuideButton,
     ConfirmationModal
   },
   props: {

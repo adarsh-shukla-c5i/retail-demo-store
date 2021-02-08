@@ -136,8 +136,8 @@ AmplifyEventBus.$on('authState', async (state) => {
 
     if (newSignUp && !hasAssignedShopperProfile) {
       AmplifyStore.dispatch('firstTimeSignInDetected');
-      
-      router.push({path: '/shopper-select'});
+      router.push({path: '/'});
+      // router.push({path: '/shopper-select'});
     } else {
       router.push({path: '/'});
     }
@@ -267,7 +267,8 @@ router.beforeResolve(async (to, from, next) => {
 
     if (!user) {
       AmplifyStore.dispatch('welcomePageVisited');
-      return next('/welcome');
+      // return next('/welcome');
+      return next('/');
     }
   }     
 

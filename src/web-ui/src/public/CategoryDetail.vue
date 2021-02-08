@@ -2,7 +2,10 @@
   <Layout :isLoading="!products.length">
       <!-- Product List -->
       <div class="container" v-if="products.length">
-        <h2 class="text-left">{{ this.display | capitalize }} <DemoGuideBadge v-if="demoGuideBadgeArticle" :article="demoGuideBadgeArticle" hideTextOnSmallScreens></DemoGuideBadge></h2>
+        <h2 class="text-left">{{ this.display | capitalize }} 
+        <!-- <DemoGuideBadge v-if="demoGuideBadgeArticle" :article="demoGuideBadgeArticle" hideTextOnSmallScreens>
+        </DemoGuideBadge> -->
+        </h2>
         <div v-if="experiment" class="text-muted text-left">
           <small><em><i v-if="experiment" class="fa fa-balance-scale"></i> {{ experiment }}</em></small>
         </div>
@@ -74,7 +77,7 @@ import { AnalyticsHandler } from '@/analytics/AnalyticsHandler'
 
 import Product from '@/components/Product/Product'
 import Layout from '@/components/Layout/Layout'
-import DemoGuideBadge from '@/components/DemoGuideBadge/DemoGuideBadge';
+// import DemoGuideBadge from '@/components/DemoGuideBadge/DemoGuideBadge';
 import { getDemoGuideArticleFromPersonalizeARN } from '@/partials/AppModal/DemoGuide/config';
 
 const ProductsRepository = RepositoryFactory.get('products')
@@ -88,7 +91,7 @@ export default {
   components: {
     Product,
     Layout,
-    DemoGuideBadge
+    // DemoGuideBadge
   },
   data() {
     return {

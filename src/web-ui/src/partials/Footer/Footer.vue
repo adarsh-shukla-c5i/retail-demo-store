@@ -1,22 +1,25 @@
 <template>
   <footer>
     <div class="justify-content-center d-flex align-items-center">
-      <div class="rds">Retail Demo Store</div>
+      <!-- <div class="rds">NBS Demo Store</div> -->
+      <img style="height: 50px;" src="/course5_logo.png"/>
       <div class="separator mx-2" aria-hidden></div>
-      <PoweredByAWS class="img"></PoweredByAWS>
+      <div class="rds">NBS Demo Store</div>
+      <!-- <PoweredByAWS class="img"></PoweredByAWS> -->
     </div>
 
-    <TermsAndConditions></TermsAndConditions>
+    <!-- <TermsAndConditions></TermsAndConditions> -->
   </footer>
 </template>
 
 <script>
-import PoweredByAWS from '@/components/PoweredByAWS/PoweredByAWS';
-import TermsAndConditions from '@/partials/TermsAndConditions/TermsAndConditions';
+// import PoweredByAWS from '@/components/PoweredByAWS/PoweredByAWS';
+// import TermsAndConditions from '@/partials/TermsAndConditions/TermsAndConditions';
 
 export default {
   name: 'Footer',
-  components: { PoweredByAWS, TermsAndConditions },
+  components: {},
+  // components: { PoweredByAWS, TermsAndConditions },
 };
 </script>
 

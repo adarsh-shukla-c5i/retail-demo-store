@@ -1,5 +1,14 @@
 <template>
   <div>
+    <p v-if="!user" id="blink"
+     style="
+        font-size: 12px;
+        margin-bottom: -1px;
+        font-weight: bold;
+        font-family: sans-serif;
+        color: #1c87c9;
+        transition: 0.4s;">Sign Up and get 20% discount</p>
+
     <router-link v-if="!user" to="/auth" class="user-dropdown-button login-button btn">Sign In</router-link>
 
     <button
@@ -51,6 +60,11 @@ import { Auth } from 'aws-amplify';
 import swal from 'sweetalert';
 
 import { Modals } from '@/partials/AppModal/config';
+
+// var blink = document.getElementById('blink');
+// setInterval(function() {
+//   blink.style.opacity = (blink.style.opacity == 0 ? 1 : 0);
+// }, 1000);
 
 export default {
   name: 'UserDropdown',

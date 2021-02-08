@@ -2,18 +2,24 @@
   <DemoWalkthroughPageLayout class="page-container text-center" :showNav="false">
     <h1 class="heading mb-4">Welcome to the Retail Demo Store tour!</h1>
     <p class="text mb-5">
-      Take our guided tour to get familiar with the demo. We'll show you the tasks and elements we recommend to use to
-      see the power of user personalization.
+            To get 20% discount on your first purchase, Sign Up
+
+      <!-- Take our guided tour to get familiar with the demo. We'll show you the tasks and elements we recommend to use to
+      see the power of user personalization. -->
     </p>
     <div class="d-flex flex-column flex-sm-row-reverse justify-content-center">
-      <button class="take-tour btn btn-primary mb-3 mb-sm-0" @click="nextTourPage">Take Tour</button>
+      <!-- <router-link to="/auth" class="take-tour btn mb-3 mb-sm-0" @click="signup">Sign In</router-link> -->
+      <button class="take-tour btn btn-primary mb-3 mb-sm-0" @click="signup">Sign In</button>
+      <!-- <button class="take-tour btn btn-primary mb-3 mb-sm-0" @click="nextTourPage">Take Tour</button> -->
+
       <button class="skip btn btn-outline-primary mr-sm-3" @click="endTour">Skip</button>
     </div>
   </DemoWalkthroughPageLayout>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+// import { mapActions } from 'vuex';
+/* global $ */
 
 import DemoWalkthroughPageLayout from '../DemoWalkthroughPageLayout';
 
@@ -22,7 +28,11 @@ import { APP_MODAL_ID } from '../../config';
 export default {
   name: 'DemoWalkthroughWelcomePage',
   methods: {
-    ...mapActions(['nextTourPage']),
+    // ...mapActions(['nextTourPage']),
+    signup() {
+      $(`#${APP_MODAL_ID}`).modal('hide');
+      this.$router.push('/auth');
+    },
     endTour() {
       // eslint-disable-next-line no-undef
       $(`#${APP_MODAL_ID}`).modal('hide');

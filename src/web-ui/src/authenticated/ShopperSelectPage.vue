@@ -15,7 +15,7 @@ export default {
   components: { SecondaryLayout, ShopperSelect },
   methods: {
     onProfileSwitch() {
-      this.$router.push('/');
+      this.$route.push('/');
     },
   },
 };

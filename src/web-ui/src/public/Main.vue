@@ -1,15 +1,17 @@
 <template>
   <Layout>
     <div class="container">
+      <BannerCarousel v-if="showBanner"></BannerCarousel>
+
       <section class="mb-5">
         <div v-if="userRecommendationsTitle" class="mb-3 text-left">
           <h2 class="recommendations-heading">
             {{ userRecommendationsTitle }}
-            <DemoGuideBadge
+            <!-- <DemoGuideBadge
               v-if="userRecommendationsDemoGuideBadgeArticle"
               :article="userRecommendationsDemoGuideBadgeArticle"
               hideTextOnSmallScreens
-            ></DemoGuideBadge>
+            ></DemoGuideBadge> -->
           </h2>
           <div v-if="recommendationsExperiment" class="recommendation-explanation text-muted">
             <i class="fa fa-balance-scale px-1"></i>
@@ -44,11 +46,11 @@
       >
         <template #heading>
           Featured products
-          <DemoGuideBadge
+          <!-- <DemoGuideBadge
             v-if="featuredProductsDemoGuideBadgeArticle"
             :article="featuredProductsDemoGuideBadgeArticle"
             hideTextOnSmallScreens
-          ></DemoGuideBadge>
+          ></DemoGuideBadge> -->
         </template>
       </RecommendedProductsSection>
     </div>
@@ -64,7 +66,9 @@ import { Modals } from '@/partials/AppModal/config';
 
 import Layout from '@/components/Layout/Layout';
 import RecommendedProductsSection from '@/components/RecommendedProductsSection/RecommendedProductsSection';
-import DemoGuideBadge from '@/components/DemoGuideBadge/DemoGuideBadge';
+import BannerCarousel from '@/components/Carousel/BannerCarousel';
+
+// import DemoGuideBadge from '@/components/DemoGuideBadge/DemoGuideBadge';
 import Product from '@/components/Product/Product';
 import LoadingFallback from '@/components/LoadingFallback/LoadingFallback';
 
@@ -80,7 +84,8 @@ export default {
   components: {
     Layout,
     RecommendedProductsSection,
-    DemoGuideBadge,
+    BannerCarousel,
+    // DemoGuideBadge,
     Product,
     LoadingFallback,
   },
@@ -170,6 +175,8 @@ export default {
               : 'Trending products';
 
             this.userRecommendationsDemoGuideBadgeArticle = getDemoGuideArticleFromPersonalizeARN(personalizeRecipe);
+            this.showBanner = this.personalizeRecommendationsForVisitor
+              ? false : true;
           } else if (experimentName) {
             this.userRecommendationsTitle = 'Recommended for you';
           }
